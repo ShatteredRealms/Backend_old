@@ -29,14 +29,13 @@ jobs:
           ${{ runner.os }}-gradle-
     - name: Build with Gradle
       run: |
-        cd ./backend
         ./gradlew bootJar
     - uses: actions/upload-artifact@v2
       with:
         name: backend-artifact
         path: |
-          ./backend/Dockerfile
-          ./backend/build/libs/*-SNAPSHOT.jar
+          ./Dockerfile
+          ./build/libs/*-SNAPSHOT.jar
   deploy-backend:
     name: Create and push docker image for backend
     runs-on: ubuntu-latest
