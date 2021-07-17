@@ -1,4 +1,4 @@
-package com.shatteredrealmsonline.controllers.admin;
+package com.shatteredrealmsonline.controllers.admin.game;
 
 import com.shatteredrealmsonline.http.response.MessageResponse;
 import com.shatteredrealmsonline.models.game.*;

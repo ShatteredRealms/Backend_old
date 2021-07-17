@@ -28,9 +28,14 @@ public class GameModeController
     }
 
     /**
-     * Returns an the character for the user when given a valid authToken. Otherwise return and error
-     * @param authToken
-     * @return
+     * Gets the character for the user when given a valid authToken and character name. Otherwise return with the
+     * corresponding error.
+     *
+     * @TODO(wil): See if returning a ResponseEntity<Object> is good practice or if we should be more specific.
+     *
+     * @param authToken authentication token for the user trying to connect
+     * @param characterName name of the character
+     * @return character requested given valid information, otherwise error message.
      */
     @GetMapping(path="/connect")
     public @ResponseBody
