@@ -14,13 +14,7 @@ public class ConnectResponse
     @Setter
     private Character character;
 
-    public ConnectResponse(String error)
-    {
-        this.error = error;
-    }
-
-    public ConnectResponse(Character character)
-    {
-        this.character = character;
-    }
+    @Getter
+    @Setter
+    private String uniqueId;
 }

@@ -12,4 +12,8 @@ public class ConnectRequest
     @Getter
     @Setter
     private String characterName;
+
+    @Getter
+    @Setter
+    private String uniqueId;
 }

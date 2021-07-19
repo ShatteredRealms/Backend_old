@@ -40,24 +40,40 @@ public class GameModeController
     public @ResponseBody
     ResponseEntity<ConnectResponse> connect(@RequestBody ConnectRequest connectRequest)
     {
+        ConnectResponse response = new ConnectResponse();
+        response.setUniqueId(connectRequest.getUniqueId());
+
         if (connectRequest.getAuthToken() == null)
-            return ResponseEntity.badRequest().body(new ConnectResponse("No token sent"));
+        {
+            response.setError("No token sent");
+            return ResponseEntity.badRequest().body(response);
+        }
 
         String username = jwtUtils.getUserNameFromJwtToken(connectRequest.getAuthToken());
 
         if (username == null || username.equals(""))
-            return ResponseEntity.badRequest().body(new ConnectResponse("Invalid token."));
+        {
+            response.setError("Invalid token.");
+            return ResponseEntity.badRequest().body(response);
+        }
 
         Optional<User> oUser = userRepository.findByUsername(username);
 
         if (oUser.isEmpty())
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ConnectResponse("Could not find user with valid token."));
+        {
+            response.setError("Could not find user with valid token.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
 
         for (Character character : oUser.get().getCharacters())
-            if (character.getName().equals(connectRequest.getCharacterName()))
-                return ResponseEntity.ok(new ConnectResponse(character));
+        {
+            if (character.getName().equals(connectRequest.getCharacterName())) {
+                return ResponseEntity.ok(response);
+            }
+        }
 
-        return ResponseEntity.badRequest().body(new ConnectResponse("No character with given name."));
+        response.setError("No character with given name.");
+        return ResponseEntity.badRequest().body(response);
     }
 }
 
