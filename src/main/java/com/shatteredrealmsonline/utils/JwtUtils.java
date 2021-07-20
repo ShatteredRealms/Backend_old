@@ -16,10 +16,10 @@ public class JwtUtils
 {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthTokenFilter.class);
 
-    @Value("${testmmo.app.jwtSecret}")
+    @Value("${shatteredrealmsonline.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${testmmo.app.jwtExpiration}")
+    @Value("${shatteredrealmsonline.app.jwtExpiration}")
     private int jwtExpiration;
 
     public boolean validateJwtToken(String authToken)

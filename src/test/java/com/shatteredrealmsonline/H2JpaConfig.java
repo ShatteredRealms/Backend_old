@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "me.wilsimpson.testmmo")
+@EnableJpaRepositories(basePackages = "com.shatteredrealmsonline")
 @EnableTransactionManagement
 public class H2JpaConfig {
     @Bean

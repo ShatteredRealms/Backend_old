@@ -41,7 +41,7 @@ public class AuthController
 {
     private final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    @Value("${testmmo.app.senderEmail}")
+    @Value("${shatteredrealmsonline.app.senderEmail}")
     private String senderEmail;
 
     @Autowired
@@ -210,13 +210,13 @@ public class AuthController
     private void sendTokenEmail(User user, ResetToken token)
     {
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom("testmmo@wildev.me");
+        msg.setFrom("no-reply@shatteredrealmsonline.com");
         msg.setTo(user.getEmail());
         msg.setText(
                 "Hello " + user.getUsername()
                         + ",\n\n You have requested a password reset. Please click the following link to reset your password. If you did not request to reset your password you can ignore this email."
                         + "\n\n <a href='"+resetPasswordLink(user.getEmail(), token.getToken())+"'>Reset Password</a>"
-                        + "\n\nThanks,\nTestMMO Dev");
+                        + "\n\nThanks,\nShattered Realms Online");
 
         try
         {
@@ -230,6 +230,6 @@ public class AuthController
 
     private String resetPasswordLink(String email, String token)
     {
-        return String.format("http://home.wildev.me/resetPassword?email=%s&token=%s", email, token);
+        return String.format("http://shatteredrealmsonline.com/resetPassword?email=%s&token=%s", email, token);
     }
 }

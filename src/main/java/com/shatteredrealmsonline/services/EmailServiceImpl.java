@@ -24,7 +24,7 @@ public class EmailServiceImpl implements MailSender {
             String to, String subject, String text) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("testmmo@wildev.me");
+        message.setFrom("no-reply@shatteredrealmsonline.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -45,16 +45,16 @@ public class EmailServiceImpl implements MailSender {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.wildev.me");
+        mailSender.setHost("smtp.shatteredrealmsonline.com");
         mailSender.setPort(25);
 
-        mailSender.setUsername("testmmo@wildev.me");
-        mailSender.setPassword("testmmo");
+        mailSender.setUsername("no-reply@shatteredrealmsonline.com");
+        mailSender.setPassword("15987ShatteredRealmsDev!");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.home.wildev.me");
+        props.put("mail.smtp.ssl.trust", "smtp.shatteredrealmsonline.com");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
 

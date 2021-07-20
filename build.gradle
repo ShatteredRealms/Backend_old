@@ -4,8 +4,8 @@ plugins {
     id 'java'
 }
 
-group = 'me.wilsimpson'
-version = '0.0.1-SNAPSHOT'
+group = 'com.shatteredrealmsonline'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '16'
 
 def prod = 'prod'
