@@ -1,8 +1,16 @@
+buildscript {
+    dependencies {
+        classpath "com.byteowls:jasypt-gradle-plugin:1.1.0"
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
+
+apply plugin: "com.byteowls.jasypt"
 
 group = 'com.shatteredrealmsonline'
 version = '0.0.2-SNAPSHOT'
@@ -15,6 +23,7 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
+
 
 repositories {
     mavenCentral()
@@ -32,6 +41,8 @@ dependencies {
     implementation 'org.springframework.session:spring-session-jdbc'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'junit:junit:4.12'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+    //compileOnly 'org.jasypt:jasypt:1.9.2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
@@ -50,6 +61,8 @@ tasks.register("bootRunProd") {
     description = "Builds the Spring Boot application with the dev profile"
     doFirst {
         bootRun.systemProperty("spring.profiles.active", "prod")
+        bootRun.systemProperty("jasypt.encryptor.algorithm", "PBEWithMD5AndDES")
+        bootRun.systemProperty("jasypt.encryptor.iv-generator-classname", "org.jasypt.iv.NoIvGenerator")
     }
     finalizedBy("bootRun")
 }
