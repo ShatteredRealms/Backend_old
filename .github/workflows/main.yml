@@ -34,7 +34,7 @@ jobs:
       with:
         name: backend-artifact
         path: |
-          ./Dockerfile
+          ./prod.Dockerfile
           ./build/libs/*-SNAPSHOT.jar
   deploy-backend:
     name: Create and push docker image for backend
@@ -50,7 +50,7 @@ jobs:
       - name: List files imported
         run: ls
       - name: Build image 
-        run: docker build -t sro/backend .
+        run: docker build -t sro/backend -f prod.Dockerfile .
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
