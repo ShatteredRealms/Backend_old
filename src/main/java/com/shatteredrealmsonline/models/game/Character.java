@@ -1,11 +1,13 @@
 package com.shatteredrealmsonline.models.game;
 
+import com.shatteredrealmsonline.models.game.util.PlayerPosition;
 import lombok.Getter;
 import lombok.Setter;
 import com.shatteredrealmsonline.models.web.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Characters are what the Player controls in the game.
@@ -93,4 +95,29 @@ public class Character
             joinColumns = @JoinColumn(name = "character_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "inv_item_id", referencedColumnName = "id"))
     private List<InventoryItem> characterItems;
+
+    /**
+     * String serialized player position
+     */
+    private String stringLocation;
+
+    /**
+     * Gets the position of the character from a serialized string
+     *
+     * @return position of the character
+     */
+    public PlayerPosition getPosition()
+    {
+        return new PlayerPosition(stringLocation);
+    }
+
+    /**
+     * Sets the string serialized position of the character
+     *
+     * @param position new position to set to
+     */
+    public void setPosition(PlayerPosition position)
+    {
+        this.stringLocation = position.toString();
+    }
 }
