@@ -12,7 +12,7 @@ jobs:
     - name: Get custom jasypt gradle plugin
       uses: actions/checktout@v2
       with:
-        repository: 'wilsimpson/jasypt-gradle-plugin'
+        repository: 'https://github.com/wilsimpson/jasypt-gradle-plugin'
         path: 'jasypt-gradle-plugin'
     - name: Go to checked out repo
       run: cd jasypt-gradle-plugin
