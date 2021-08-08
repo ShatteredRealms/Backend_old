@@ -99,7 +99,7 @@ public class Character
     /**
      * String serialized player position
      */
-    private String stringLocation;
+    private String stringLocation = "";
 
     /**
      * Gets the position of the character from a serialized string
