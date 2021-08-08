@@ -40,7 +40,9 @@ public class Vector3D
      */
     public Vector3D()
     {
-
+        x = 0;
+        y = 0;
+        z = 0;
     }
 
     /**

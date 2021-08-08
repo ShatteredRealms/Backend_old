@@ -42,7 +42,9 @@ public class PlayerPosition implements Serializable
      */
     public PlayerPosition()
     {
-
+        location = new Vector3D();
+        rotation = new Vector3D();
+        map = "StarterMap";
     }
 
     /**
