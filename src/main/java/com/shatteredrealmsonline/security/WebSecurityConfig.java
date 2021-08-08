@@ -81,9 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/api/v1/pub/**").permitAll()
                 .antMatchers("/api/v1/testing/**").permitAll()
-                .antMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN_PRIVILEGES_ALL_RW")
-                .antMatchers("/api/v1/mod/**").hasAnyAuthority("MOD_PRIVILEGES_ALL_RW")
-                .antMatchers("/api/v1/user/**").hasAnyAuthority("USER_PRIVILEGES_ALL_RW")
+                .antMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN_PRIVILEGES_ALL_RW", "SUPER_ADMIN")
+                .antMatchers("/api/v1/mod/**").hasAnyAuthority("MOD_PRIVILEGES_ALL_RW", "SUPER_ADMIN")
+                .antMatchers("/api/v1/user/**").hasAnyAuthority("USER_PRIVILEGES_ALL_RW", "SUPER_ADMIN")
             .and()
 
             // Setup filter for authentication

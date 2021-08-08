@@ -47,6 +47,19 @@ public class UserDetailsImpl implements UserDetails
         this.authorities = getGrantedAuthorities(getPrivileges(roles));
     }
 
+    public UserDetailsImpl(
+            Long id,
+            String username,
+            String password,
+            String email,
+            String role)
+    {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.authorities = List.of(new SimpleGrantedAuthority(role));
+    }
+
     public static UserDetailsImpl createUser(User user) {
         return new UserDetailsImpl(
                 user.getId(),
@@ -62,7 +75,7 @@ public class UserDetailsImpl implements UserDetails
                 name,
                 UUID.randomUUID().toString(),
                 "admin@"+name,
-                new ArrayList<>());
+                "SUPER_ADMIN");
     }
 
     private List<String> getPrivileges(Collection<Role> roles) {
