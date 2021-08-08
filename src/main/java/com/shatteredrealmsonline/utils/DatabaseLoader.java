@@ -1,7 +1,9 @@
 package com.shatteredrealmsonline.utils;
 
 import com.shatteredrealmsonline.models.game.*;
+import com.shatteredrealmsonline.models.game.Character;
 import com.shatteredrealmsonline.models.game.repos.*;
+import com.shatteredrealmsonline.models.game.util.PlayerPosition;
 import com.shatteredrealmsonline.models.web.ERole;
 import com.shatteredrealmsonline.models.web.Privilege;
 import com.shatteredrealmsonline.models.web.Role;
@@ -45,6 +47,8 @@ public class DatabaseLoader implements CommandLineRunner
 
     private final BreedRepository breedRepository;
 
+    private final CharacterRepository characterRepository;
+
     @Autowired
     public DatabaseLoader(
             UserRepository userRepository,
@@ -57,7 +61,8 @@ public class DatabaseLoader implements CommandLineRunner
             SlotTypeRepository slotTypeRepository,
             BreedRepository breedRepository,
             GenderRepository genderRepository,
-            PasswordEncoder passwordEncoder)
+            PasswordEncoder passwordEncoder,
+            CharacterRepository characterRepository)
     {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -70,19 +75,19 @@ public class DatabaseLoader implements CommandLineRunner
         this.breedRepository = breedRepository;
         this.genderRepository = genderRepository;
         this.slotTypeRepository = slotTypeRepository;
-
+        this.characterRepository = characterRepository;
     }
 
     @Override
     public void run(String... strings)
     {
-        log.info("Starting game database initialization");
-        initGame();
-        log.info("Finished game database initialization");
-
         log.info("Starting web database initialization");
         initWeb();
         log.info("Finished web database initialization");
+
+        log.info("Starting game database initialization");
+        initGame();
+        log.info("Finished game database initialization");
     }
 
     private void initGame()
@@ -171,6 +176,18 @@ public class DatabaseLoader implements CommandLineRunner
             ));
             i.setQuality("2");
             itemRepository.saveAndFlush(i);
+        }
+
+
+
+        if (characterRepository.findByName("wilcharacter").isEmpty())
+        {
+            Character c = new Character();
+            c.setName("wilcharacter");
+            c.setBreed(breedRepository.findAll().get(0));
+            c.setGender(genderRepository.findAll().get(0));
+            c.setOwner(userRepository.findByUsername("wil").orElseThrow());
+            characterRepository.saveAndFlush(c);
         }
     }
 

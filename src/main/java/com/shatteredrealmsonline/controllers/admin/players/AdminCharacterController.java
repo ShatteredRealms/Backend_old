@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -32,7 +29,7 @@ public class AdminCharacterController
 
     @GetMapping(path="/characters/{character}/map")
     public @ResponseBody
-    ResponseEntity<String> getCharactersMap(@RequestParam(name="character") String characterName)
+    ResponseEntity<String> getCharactersMap(@PathVariable(name="character") String characterName)
     {
         if (characterName == null)
         {
@@ -43,7 +40,7 @@ public class AdminCharacterController
 
         if (oCharacter.isEmpty())
         {
-            return ResponseEntity.badRequest().body("Error: character not found with given name");
+            return ResponseEntity.unprocessableEntity().body("Error: character not found with given name");
         }
 
         return ResponseEntity.ok(oCharacter.get().getPosition().getMap());
