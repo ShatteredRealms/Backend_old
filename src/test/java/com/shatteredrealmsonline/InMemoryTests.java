@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
@@ -104,6 +104,9 @@ class InMemoryTests
 
     @Autowired
     GenderRepository genderRepository;
+
+    @Autowired
+    CharacterRepository characterRepository;
 
     static LoginSessionInfo loginSessionInfo = new LoginSessionInfo();
 
@@ -352,7 +355,8 @@ class InMemoryTests
                 slotTypeRepository,
                 breedRepository,
                 genderRepository,
-                passwordEncoder);
+                passwordEncoder,
+                characterRepository);
         loader.run();
     }
 
