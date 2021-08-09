@@ -15,13 +15,23 @@ public class GenericResponse
     @JsonInclude(Include.NON_NULL)
     private ErrorResponse error;
 
+    @Getter
+    @Setter
+    @JsonInclude(Include.NON_NULL)
+    private String success;
+
+    public GenericResponse()
+    {
+
+    }
+
     public GenericResponse(ErrorResponse error)
     {
         this.error = error;
     }
 
-    public GenericResponse()
+    public GenericResponse(String message)
     {
-
+        this.success = message;
     }
 }

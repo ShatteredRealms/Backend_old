@@ -6,7 +6,13 @@ import lombok.Getter;
 
 public enum ResponseErrorCode
 {
-    NOT_FOUND(5, "Could not find");
+    ACCESS_DENIED(1, "Access denied"),
+    NOT_FOUND(5, "Could not find"),
+    MISSING_REQUEST_CONTENT(6, "Could not find all required request content"),
+    ALREADY_EXISTS(7, "Already exists"),
+    BAD_NAME(8, "Bad name"),
+
+    ;
 
     @Getter
     int code;

@@ -80,6 +80,10 @@ public class User implements Serializable
     @Setter
     private String creditCardSecurityCode;
 
+    @Getter
+    @Setter
+    private int maxNumCharacters = 10;
+
     public User() { }
 
     public User(String username, String password, String email, Set<Role> roles)

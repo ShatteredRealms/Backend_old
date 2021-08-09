@@ -32,6 +32,10 @@ public class UserDetailsImpl implements UserDetails
     @Setter
     private String email;
 
+    @Getter
+    @Setter
+    private boolean isSuperAdmin;
+
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(
@@ -71,11 +75,13 @@ public class UserDetailsImpl implements UserDetails
 
     public static UserDetailsImpl createAdmin(String name)
     {
-        return  new UserDetailsImpl(-1L,
+        UserDetailsImpl userDetails = new UserDetailsImpl(-1L,
                 name,
                 UUID.randomUUID().toString(),
                 "admin@"+name,
                 "SUPER_ADMIN");
+        userDetails.setSuperAdmin(true);
+        return userDetails;
     }
 
     private List<String> getPrivileges(Collection<Role> roles) {
