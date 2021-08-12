@@ -112,6 +112,12 @@ public class User implements Serializable
         return roles.add(role);
     }
 
+    public void addCharacter(Character c)
+    {
+        c.setOwner(this);
+        characters.add(c);
+    }
+
     public boolean hasResetToken()
     {
         return resetToken != null;

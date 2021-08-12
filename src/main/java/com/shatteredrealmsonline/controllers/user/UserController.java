@@ -156,8 +156,9 @@ public class UserController
         c.setName(request.getName());
         c.setBreed(breed.get());
         c.setGender(gender.get());
-        c.setOwner(user);
         c.setPosition(new PlayerPosition());
+        user.addCharacter(c);
+        userRepository.saveAndFlush(user);
         characterRepository.saveAndFlush(c);
 
         response.setSuccess("Character created!");

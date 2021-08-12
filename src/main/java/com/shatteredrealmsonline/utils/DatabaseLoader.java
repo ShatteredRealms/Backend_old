@@ -186,8 +186,10 @@ public class DatabaseLoader implements CommandLineRunner
             c.setName("wilcharacter");
             c.setBreed(breedRepository.findAll().get(0));
             c.setGender(genderRepository.findAll().get(0));
-            c.setOwner(userRepository.findByUsername("wil").orElseThrow());
             c.setPosition(new PlayerPosition());
+            User u = userRepository.findByUsername("wil").orElseThrow();
+            u.addCharacter(c);
+            userRepository.saveAndFlush(u);
             characterRepository.saveAndFlush(c);
         }
     }
