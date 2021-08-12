@@ -189,8 +189,8 @@ public class DatabaseLoader implements CommandLineRunner
             c.setPosition(new PlayerPosition());
             User u = userRepository.findByUsername("wil").orElseThrow();
             u.addCharacter(c);
-            userRepository.saveAndFlush(u);
             characterRepository.saveAndFlush(c);
+            userRepository.saveAndFlush(u);
         }
     }
 
