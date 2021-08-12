@@ -1,5 +1,6 @@
 package com.shatteredrealmsonline.models.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shatteredrealmsonline.models.game.util.PlayerPosition;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class Character
     @Setter
     @JoinColumn(name = "owner_id", nullable = false, unique = true)
     @ManyToOne
+    @JsonIgnore
     private User owner;
 
     /**
