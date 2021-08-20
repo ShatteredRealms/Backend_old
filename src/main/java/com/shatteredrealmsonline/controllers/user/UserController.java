@@ -176,8 +176,9 @@ public class UserController
         c.setGender(gender.get());
         c.setCharacterClass(characterClass.get());
         c.setPosition(new PlayerPosition());
-        user.addCharacter(c);
+        c.setOwner(user);
         characterRepository.saveAndFlush(c);
+        user.addCharacter(c);
         userRepository.saveAndFlush(user);
 
         response.setSuccess("Character created!");

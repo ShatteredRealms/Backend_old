@@ -62,7 +62,7 @@ public class User implements Serializable
     @Setter
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_characters")
-    private List<Character> characters;
+    private Set<Character> characters;
 
     @Getter
     @Setter
