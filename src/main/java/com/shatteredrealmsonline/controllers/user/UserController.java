@@ -163,9 +163,9 @@ public class UserController
 
         // Validate user can have more characters
         User user = getCurrentUser();
-        if (user.getMaxNumCharacters() >= user.getCharacters().size())
+        if (user.getCharacters().size() >= user.getMaxNumCharacters())
         {
-            response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name must be at least "+nameMinLength+" characters"));
+            response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Not enough remaining character slots"));
             return ResponseEntity.ok().body(response);
         }
 
