@@ -2,6 +2,7 @@ package com.shatteredrealmsonline.controllers.user;
 
 
 import com.shatteredrealmsonline.controllers.admin.AdminController;
+import com.shatteredrealmsonline.http.requests.CreateCharacterRequest;
 import com.shatteredrealmsonline.http.response.ErrorResponse;
 import com.shatteredrealmsonline.http.response.GenericResponse;
 import com.shatteredrealmsonline.http.response.ResponseErrorCode;
@@ -188,22 +189,5 @@ public class UserController
         return userRepository.getById(((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
 
-    public class CreateCharacterRequest
-    {
-        @Getter
-        @Setter
-        private String name;
 
-        @Getter
-        @Setter
-        private String breedName;
-
-        @Getter
-        @Setter
-        private String genderName;
-
-        @Getter
-        @Setter
-        private String className;
-    }
 }
