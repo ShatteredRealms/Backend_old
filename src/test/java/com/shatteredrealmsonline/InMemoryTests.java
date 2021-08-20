@@ -108,6 +108,9 @@ class InMemoryTests
     @Autowired
     CharacterRepository characterRepository;
 
+    @Autowired
+    CharacterClassRepository characterClassRepository;
+
     static LoginSessionInfo loginSessionInfo = new LoginSessionInfo();
 
     @Test
@@ -356,7 +359,8 @@ class InMemoryTests
                 breedRepository,
                 genderRepository,
                 passwordEncoder,
-                characterRepository);
+                characterRepository,
+                characterClassRepository);
         loader.run();
     }
 

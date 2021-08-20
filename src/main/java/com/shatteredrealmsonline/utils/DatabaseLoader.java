@@ -49,6 +49,8 @@ public class DatabaseLoader implements CommandLineRunner
 
     private final CharacterRepository characterRepository;
 
+    private final CharacterClassRepository characterClassRepository;
+
     @Autowired
     public DatabaseLoader(
             UserRepository userRepository,
@@ -62,7 +64,7 @@ public class DatabaseLoader implements CommandLineRunner
             BreedRepository breedRepository,
             GenderRepository genderRepository,
             PasswordEncoder passwordEncoder,
-            CharacterRepository characterRepository)
+            CharacterRepository characterRepository, CharacterClassRepository characterClassRepository)
     {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -76,6 +78,7 @@ public class DatabaseLoader implements CommandLineRunner
         this.genderRepository = genderRepository;
         this.slotTypeRepository = slotTypeRepository;
         this.characterRepository = characterRepository;
+        this.characterClassRepository = characterClassRepository;
     }
 
     @Override
@@ -154,6 +157,17 @@ public class DatabaseLoader implements CommandLineRunner
         createBreedIfNotFound("Nanomage", "Sample description");
         createBreedIfNotFound("Atrox", "Sample description");
 
+        Map<String, Integer> skillCosts = new HashMap<>();
+        for (Skill skill : skillRepository.findAll())
+        {
+            skillCosts.put(skill.getName(), 1);
+        }
+
+        createCharacterClassIfNotFound("Enforcer", "Sample description", skillCosts);
+        createCharacterClassIfNotFound("Doctor", "Sample description", skillCosts);
+        createCharacterClassIfNotFound("Engineer", "Sample description", skillCosts);
+        createCharacterClassIfNotFound("Martial Artist", "Sample description", skillCosts);
+
         if (itemRepository.findByName("The testor").isEmpty())
         {
             Item i = new Item();
@@ -219,6 +233,19 @@ public class DatabaseLoader implements CommandLineRunner
                 this.userRepository.save(user);
         }
         this.userRepository.flush();
+    }
+
+    private void createCharacterClassIfNotFound(String name, String description, Map<String, Integer> skillCosts)
+    {
+        Optional<CharacterClass> oCharacterClass = characterClassRepository.findByName(name);
+        if (oCharacterClass.isEmpty())
+        {
+            CharacterClass characterClass = new CharacterClass();
+            characterClass.setName(name);
+            characterClass.setDescription(description);
+            characterClass.setSkillCostsFromString(skillCosts);
+            characterClassRepository.saveAndFlush(characterClass);
+        }
     }
 
     private void createGenderIfNotFound(String name, String description)
