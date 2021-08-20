@@ -1,15 +1,16 @@
 package com.shatteredrealmsonline.controllers.user;
 
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.shatteredrealmsonline.controllers.admin.AdminController;
 import com.shatteredrealmsonline.http.response.ErrorResponse;
 import com.shatteredrealmsonline.http.response.GenericResponse;
 import com.shatteredrealmsonline.http.response.ResponseErrorCode;
 import com.shatteredrealmsonline.models.game.Breed;
 import com.shatteredrealmsonline.models.game.Character;
+import com.shatteredrealmsonline.models.game.CharacterClass;
 import com.shatteredrealmsonline.models.game.Gender;
 import com.shatteredrealmsonline.models.game.repos.BreedRepository;
+import com.shatteredrealmsonline.models.game.repos.CharacterClassRepository;
 import com.shatteredrealmsonline.models.game.repos.CharacterRepository;
 import com.shatteredrealmsonline.models.game.repos.GenderRepository;
 import com.shatteredrealmsonline.models.game.util.PlayerPosition;
@@ -45,17 +46,20 @@ public class UserController
 
     private final CharacterRepository characterRepository;
 
+    private final CharacterClassRepository characterClassRepository;
+
     @Value("${shatteredrealmsonline.name.minLength}")
     private int nameMinLength;
 
     @Value("${shatteredrealmsonline.name.maxLength}")
     private int nameMaxLength;
 
-    public UserController(UserRepository userRepository, BreedRepository breedRepository, GenderRepository genderRepository, CharacterRepository characterRepository) {
+    public UserController(UserRepository userRepository, BreedRepository breedRepository, GenderRepository genderRepository, CharacterRepository characterRepository, CharacterClassRepository characterClassRepository) {
         this.userRepository = userRepository;
         this.breedRepository = breedRepository;
         this.genderRepository = genderRepository;
         this.characterRepository = characterRepository;
+        this.characterClassRepository = characterClassRepository;
     }
 
     @GetMapping(path="/game/characters")
@@ -96,6 +100,12 @@ public class UserController
             return ResponseEntity.badRequest().body(response);
         }
 
+        if (request.getClassName() == null || request.getClassName().equals(""))
+        {
+            response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing gender"));
+            return ResponseEntity.badRequest().body(response);
+        }
+
         // Validate breed and gender are valid
         Optional<Breed> breed = breedRepository.findByName(request.getBreedName());
         if (breed.isEmpty())
@@ -108,6 +118,13 @@ public class UserController
         if (gender.isEmpty())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find gender: "+request.getGenderName()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        Optional<CharacterClass> characterClass = characterClassRepository.findByName(request.getGenderName());
+        if (characterClass.isEmpty())
+        {
+            response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find class: "+request.getClassName()));
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -156,6 +173,7 @@ public class UserController
         c.setName(request.getName());
         c.setBreed(breed.get());
         c.setGender(gender.get());
+        c.setCharacterClass(characterClass.get());
         c.setPosition(new PlayerPosition());
         user.addCharacter(c);
         characterRepository.saveAndFlush(c);
@@ -178,12 +196,14 @@ public class UserController
 
         @Getter
         @Setter
-        @JsonAlias(value = "breed")
         private String breedName;
 
         @Getter
         @Setter
-        @JsonAlias(value = "gender")
         private String genderName;
+
+        @Getter
+        @Setter
+        private String className;
     }
 }
