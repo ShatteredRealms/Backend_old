@@ -42,7 +42,7 @@ public class Character
      */
     @Getter
     @Setter
-    @JoinColumn(name = "owner_id", nullable = false, unique = true)
+    @JoinColumn(name = "owner_id", nullable = false)
     @ManyToOne
     @JsonIgnore
     private User owner;
