@@ -80,31 +80,31 @@ public class UserController
         if (request == null)
         {
             response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Body cannot be null"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getName() == null || request.getName().equals(""))
         {
             response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing name"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getBreedName() == null || request.getBreedName().equals(""))
         {
             response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing breed"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getGenderName() == null || request.getGenderName().equals(""))
         {
             response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing gender"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getClassName() == null || request.getClassName().equals(""))
         {
             response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing class"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         // Validate breed and gender are valid
@@ -112,53 +112,53 @@ public class UserController
         if (breed.isEmpty())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find breed: "+request.getBreedName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         Optional<Gender> gender = genderRepository.findByName(request.getGenderName());
         if (gender.isEmpty())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find gender: "+request.getGenderName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         Optional<CharacterClass> characterClass = characterClassRepository.findByName(request.getClassName());
         if (characterClass.isEmpty())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find class: "+request.getClassName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         // Validate name is not taken
         if (characterRepository.findByName(request.getName()).isPresent())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.ALREADY_EXISTS, "Name is taken: "+request.getName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         // Validate name
         if (java.lang.Character.isDigit(request.getName().charAt(0)))
         {
             response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name cannot start with number: "+request.getName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (!namePattern.matcher(request.getName()).find())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name contains invalid characters: "+request.getName()));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getName().length() > nameMaxLength)
         {
             response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name length exceeds "+nameMaxLength+" characters"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         if (request.getName().length() < nameMinLength)
         {
             response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name must be at least "+nameMinLength+" characters"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         // Validate user can have more characters
@@ -166,7 +166,7 @@ public class UserController
         if (user.getMaxNumCharacters() >= user.getCharacters().size())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.BAD_NAME, "Name must be at least "+nameMinLength+" characters"));
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok().body(response);
         }
 
         // Character creation is valid, create new character
