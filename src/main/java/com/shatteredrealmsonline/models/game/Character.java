@@ -65,6 +65,12 @@ public class Character
     @JoinColumn(name = "gender_id", nullable = false)
     private Gender gender;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "character_class_id", nullable = false)
+    private CharacterClass characterClass;
+
     /**
      * Currently running Nanos in the Characters NCU
      */
