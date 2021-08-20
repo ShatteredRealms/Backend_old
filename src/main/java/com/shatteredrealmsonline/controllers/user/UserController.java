@@ -103,7 +103,7 @@ public class UserController
 
         if (request.getClassName() == null || request.getClassName().equals(""))
         {
-            response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing gender"));
+            response.setError(new ErrorResponse(ResponseErrorCode.MISSING_REQUEST_CONTENT, "Missing class"));
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -122,7 +122,7 @@ public class UserController
             return ResponseEntity.badRequest().body(response);
         }
 
-        Optional<CharacterClass> characterClass = characterClassRepository.findByName(request.getGenderName());
+        Optional<CharacterClass> characterClass = characterClassRepository.findByName(request.getClassName());
         if (characterClass.isEmpty())
         {
             response.setError(new ErrorResponse(ResponseErrorCode.NOT_FOUND, "Could not find class: "+request.getClassName()));
